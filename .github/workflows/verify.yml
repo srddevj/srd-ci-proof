@@ -1,0 +1,24 @@
+# DRAFT ONLY. Not installed, committed, pushed, or run on GitHub.
+# Only a separately reviewed synthetic/public bundle may be published here.
+name: Synthetic evidence contract
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: synthetic-evidence-contract
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Checkout approved public or synthetic bundle
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Verify synthetic receipt contract
+        run: python3 -I ci/verify.py
